@@ -31,8 +31,8 @@ class LinebotController < ApplicationController
     per06to12 = doc.elements[xpath + '/rainfallchance/period[2]l'].text
     per12to18 = doc.elements[xpath + '/rainfallchance/period[3]l'].text
     per18to24 = doc.elements[xpath + '/rainfallchance/period[4]l'].text
-    MIN_PER = 30
-    if per06to12.to_i >= MIN_PER || per12to18.to_i >= MIN_PER || per18to24.to_i >= MIN_PER
+    min_per = 30
+    if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
       push = "今日は傘を持っていってね！#{weather}だよ"
     end
 
