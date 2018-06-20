@@ -23,8 +23,6 @@ class LinebotController < ApplicationController
     end
 
     # 仮でここに記載
-    push = event.message['text']
-
     url  = "http://www.drk7.jp/weather/xml/13.xml"
     xml  = open( url ).read.toutf8
     doc = REXML::Document.new(xml)
