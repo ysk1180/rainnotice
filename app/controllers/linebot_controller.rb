@@ -1,5 +1,8 @@
 class LinebotController < ApplicationController
   require 'line/bot'  # gem 'line-bot-api'
+  require 'open-uri'
+  require 'kconv'
+  require 'rexml/document'
 
   # callbackアクションのCSRFトークン認証を無効
   protect_from_forgery :except => [:callback]
@@ -19,6 +22,22 @@ class LinebotController < ApplicationController
       error 400 do 'Bad Request' end
     end
 
+    # 仮でここに記載
+    push = event.message['text']
+
+    url  = "http://www.drk7.jp/weather/xml/13.xml"
+    xml  = open( url ).read.toutf8
+    doc = REXML::Document.new(xml)
+    xpath = 'weatherforecast/pref/area[4]/info'
+    weather = doc.elements[xpath + '/weather'].text
+    per06to12 = doc.elements[xpath + '/rainfallchance/period[2]l'].text
+    per12to18 = doc.elements[xpath + '/rainfallchance/period[3]l'].text
+    per18to24 = doc.elements[xpath + '/rainfallchance/period[4]l'].text
+    MIN_PER = 30
+    if per06to12.to_i >= MIN_PER || per12to18.to_i >= MIN_PER || per18to24.to_i >= MIN_PER
+      push = "今日は傘を持っていってね！#{weather}だよ"
+    end
+
     events = client.parse_events_from(body)
 
     events.each { |event|
@@ -28,7 +47,7 @@ class LinebotController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
-            text: event.message['text']
+            text: push
           }
           client.reply_message(event['replyToken'], message)
         end
