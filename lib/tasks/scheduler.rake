@@ -39,7 +39,7 @@ task :update_feed => :environment do
       type: 'text',
       text: push
     }
-    response = client.multicast(user_ids, message)
+    response = client.multicast(row['user_id'], message)
   end
   "OK"
 end
