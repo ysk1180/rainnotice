@@ -50,7 +50,7 @@ class LinebotController < ApplicationController
           client.reply_message(event['replyToken'], message)
         end
       when Line::Bot::Event::Follow
-        user_id = event.source['userId']
+        user_id = event['source']['userId']
         message = {
           type: 'text',
           text: user_id
