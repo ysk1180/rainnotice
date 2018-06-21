@@ -33,5 +33,5 @@ task :update_feed => :environment do
   }
   response = client.multicast(user_ids, message)
 
-    head :ok
+  "OK"
 end
