@@ -49,9 +49,15 @@ class LinebotController < ApplicationController
           }
           client.reply_message(event['replyToken'], message)
         end
+      when Line::Bot::Event::Message
+        user_id = event.source['userId']
+        message = {
+          type: 'text',
+          text: user_id
+        }
+        client.reply_message(event['replyToken'], message)
       end
     }
-
     head :ok
   end
 end
