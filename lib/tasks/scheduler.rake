@@ -18,20 +18,34 @@ task :update_feed => :environment do
   per06to12 = doc.elements[xpath + '/rainfallchance/period[2]l'].text
   per12to18 = doc.elements[xpath + '/rainfallchance/period[3]l'].text
   per18to24 = doc.elements[xpath + '/rainfallchance/period[4]l'].text
-  min_per = 20
+  min_per = 20 #最終的に30に変える
   if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
-    push = "今日は傘を持っていってね！#{weather}だよ"
-  else
-    push = "テスト用"
+    word1 =
+      ["いい朝だね！",
+       "今日もよく眠れた？",
+       "二日酔い大丈夫？",
+       "早起きしてえらいね！",
+       "いつもより起きるのちょっと遅いんじゃない？"].sample
+    word2 =
+      ["気をつけて行ってきてね！",
+       "良い一日を！",
+       "雨に負けずに今日も頑張ってね！",
+       "今日も一日楽しんでいこうね！",
+       "面白いことがあったら教えてね！行ってらっしゃい！"].sample
+    push =
+      "#{word1}\n
+      今日は雨が降りそうだから傘を忘れないでね！\n
+      降水確率はこんな感じだよ。\n
+       6〜12時　#{per06to12}％\n
+      12〜18時　#{per12to18}％\n
+      18〜24時　#{per18to22}％\n
+      #{word2}"
+      user_ids = "U96a2790cfba425cb1e422d6f00c3a877"
+    message = {
+      type: 'text',
+      text: push
+    }
+    response = client.multicast(user_ids, message)
   end
-
-  user_ids = "U96a2790cfba425cb1e422d6f00c3a877"
-
-  message = {
-    type: 'text',
-    text: push
-  }
-  response = client.multicast(user_ids, message)
-
   "OK"
 end
