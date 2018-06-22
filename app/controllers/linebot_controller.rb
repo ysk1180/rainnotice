@@ -87,7 +87,7 @@ class LinebotController < ApplicationController
             end
           end
         else
-          push = "テキスト以外はわからないよ〜(;;)"
+          push = "テキスト以外はわからないよ〜(；；)"
         end
         message = {
           type: 'text',
