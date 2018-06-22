@@ -37,7 +37,7 @@ class LinebotController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           input = event.message['text']
           case input
-          when /.*明日.*/
+          when /.*(明日|あした).*/
             per06to12 = doc.elements[xpath + 'info[2]/rainfallchance/period[2]l'].text
             per12to18 = doc.elements[xpath + 'info[2]/rainfallchance/period[3]l'].text
             per18to24 = doc.elements[xpath + 'info[2]/rainfallchance/period[4]l'].text
@@ -48,7 +48,7 @@ class LinebotController < ApplicationController
               push =
                 "明日の天気？\n明日は雨が降らない予定だよ(^^)\nまた明日の朝の最新の天気予報で雨が降りそうだったら教えるね！"
             end
-          when /.*明後日.*/
+          when /.*(明後日|あさって).*/
             per06to12 = doc.elements[xpath + 'info[3]/rainfallchance/period[2]l'].text
             per12to18 = doc.elements[xpath + 'info[3]/rainfallchance/period[3]l'].text
             per18to24 = doc.elements[xpath + 'info[3]/rainfallchance/period[4]l'].text
@@ -59,7 +59,7 @@ class LinebotController < ApplicationController
               push =
                 "明後日の天気？\n気が早いねー！何かあるのかな。\n明後日は雨は降らない予定だよ(^^)\nまた当日の朝の最新の天気予報で雨が降りそうだったら教えるからね！"
             end
-          when /.*(かわいい|可愛い|カワイイ|きれい|綺麗|キレイ|素敵|ステキ|面白い|おもしろい).*/
+          when /.*(かわいい|可愛い|カワイイ|きれい|綺麗|キレイ|素敵|ステキ|すてき|面白い|おもしろい|ありがとう).*/
             push =
               "ありがとう！！！\n優しい言葉をかけてくれるあなたはとても素敵です(^^)"
           when /.*(こんにちは|こんばんは|初めまして|はじめまして|おはよう).*/
