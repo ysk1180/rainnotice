@@ -18,7 +18,7 @@ task :update_feed => :environment do
   per06to12 = doc.elements[xpath + '/rainfallchance/period[2]l'].text
   per12to18 = doc.elements[xpath + '/rainfallchance/period[3]l'].text
   per18to24 = doc.elements[xpath + '/rainfallchance/period[4]l'].text
-  min_per = 20 #最終的に30に変える
+  min_per = 0 #最終的に30に変える
   if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
     word1 =
       ["いい朝だね！",
