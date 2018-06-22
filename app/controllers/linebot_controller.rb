@@ -86,12 +86,14 @@ class LinebotController < ApplicationController
                 "今日の天気？\n今日は雨は降らなさそうだよ。\n#{word}"
             end
           end
-          message = {
-            type: 'text',
-            text: push
-          }
-          client.reply_message(event['replyToken'], message)
+        else
+          push = "テキスト以外はわからないよ〜(;;)"
         end
+        message = {
+          type: 'text',
+          text: push
+        }
+        client.reply_message(event['replyToken'], message)
       when Line::Bot::Event::Follow
         line_id = event['source']['userId']
         User.create(line_id: line_id)
