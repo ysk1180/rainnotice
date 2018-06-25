@@ -61,12 +61,7 @@ class LinebotController < ApplicationController
               push =
                 "明後日の天気？\n気が早いねー！何かあるのかな。\n明後日は雨は降らない予定だよ(^^)\nまた当日の朝の最新の天気予報で雨が降りそうだったら教えるからね！"
             end
-          when /.*(かわいい|可愛い|カワイイ|きれい|綺麗|キレイ|素敵|ステキ|すてき|面白い|おもしろい|ありがと|すごい|スゴイ|スゴい|好き|頑張|がんば|ガンバ).*/
-            push =
-              "ありがとう！！！\n優しい言葉をかけてくれるあなたはとても素敵です(^^)"
-          when /.*(こんにちは|こんばんは|初めまして|はじめまして|おはよう).*/
-            push =
-              "こんにちは。\n声をかけてくれてありがとう\n今日があなたにとっていい日になりますように(^^)"
+          # 開発者への匿名での意見送信機能
           when /.*意見.*/
             push =
               "ご意見ありがとう！\nいただいた貴重なご意見は、誰が送ったのかは秘密で開発者に届けるからね！"
@@ -76,6 +71,12 @@ class LinebotController < ApplicationController
             }
             dev_id = "U96a2790cfba425cb1e422d6f00c3a877"
             response = client.push_message(dev_id, message2)
+          when /.*(かわいい|可愛い|カワイイ|きれい|綺麗|キレイ|素敵|ステキ|すてき|面白い|おもしろい|ありがと|すごい|スゴイ|スゴい|好き|頑張|がんば|ガンバ).*/
+            push =
+              "ありがとう！！！\n優しい言葉をかけてくれるあなたはとても素敵です(^^)"
+          when /.*(こんにちは|こんばんは|初めまして|はじめまして|おはよう).*/
+            push =
+              "こんにちは。\n声をかけてくれてありがとう\n今日があなたにとっていい日になりますように(^^)"
           else
             per06to12 = doc.elements[xpath + 'info/rainfallchance/period[2]l'].text
             per12to18 = doc.elements[xpath + 'info/rainfallchance/period[3]l'].text
