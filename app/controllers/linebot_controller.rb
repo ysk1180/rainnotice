@@ -30,7 +30,7 @@ class LinebotController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           # event.message['text']：ユーザーから送られたメッセージ
           input = event.message['text']
-          url  = "http://www.drk7.jp/weather/xml/13.xml"
+          url  = "https://www.drk7.jp/weather/xml/13.xml"
           xml  = open( url ).read.toutf8
           doc = REXML::Document.new(xml)
           xpath = 'weatherforecast/pref/area[4]/'
