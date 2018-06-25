@@ -45,7 +45,7 @@ class LinebotController < ApplicationController
               type: 'text',
               text: "いただいたご意見↓\n#{input}"
             }
-            dev_id = "U96a2790cfba425cb1e422d6f00c3a877"
+            dev_id = ENV["DEV_ID"]
             response = client.push_message(dev_id, message2)
             # 「明日」or「あした」というワードが含まれる場合
           when /.*(明日|あした).*/
