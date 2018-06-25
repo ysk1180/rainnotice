@@ -23,10 +23,10 @@ class LinebotController < ApplicationController
     events = client.parse_events_from(body)
     events.each { |event|
       case event
-      # メッセージが送信された場合の対応
+        # メッセージが送信された場合の対応
       when Line::Bot::Event::Message
         case event.type
-        # ユーザーからテキスト形式のメッセージが送られて来た場合
+          # ユーザーからテキスト形式のメッセージが送られて来た場合
         when Line::Bot::Event::MessageType::Text
           # event.message['text']：ユーザーから送られたメッセージ
           input = event.message['text']
@@ -67,6 +67,15 @@ class LinebotController < ApplicationController
           when /.*(こんにちは|こんばんは|初めまして|はじめまして|おはよう).*/
             push =
               "こんにちは。\n声をかけてくれてありがとう\n今日があなたにとっていい日になりますように(^^)"
+          when /.*意見.*/
+            push =
+              "ご意見ありがとう！\nいただいた貴重なご意見は、誰が送ったのかは秘密で開発者に届けるからね！"
+            message2 = {
+              type: 'text',
+              text: "いただいたご意見↓\n#{input}"
+            }
+            dev_id = "U96a2790cfba425cb1e422d6f00c3a877"
+            response = client.push_message(dev_id, message2)
           else
             per06to12 = doc.elements[xpath + 'info/rainfallchance/period[2]l'].text
             per12to18 = doc.elements[xpath + 'info/rainfallchance/period[3]l'].text
@@ -88,7 +97,7 @@ class LinebotController < ApplicationController
                 "今日の天気？\n今日は雨は降らなさそうだよ。\n#{word}"
             end
           end
-        # テキスト以外（画像等）のメッセージが送られた場合
+          # テキスト以外（画像等）のメッセージが送られた場合
         else
           push = "テキスト以外はわからないよ〜(；；)"
         end
@@ -97,12 +106,12 @@ class LinebotController < ApplicationController
           text: push
         }
         client.reply_message(event['replyToken'], message)
-      # LINEお友達追された場合
+        # LINEお友達追された場合
       when Line::Bot::Event::Follow
         # 登録したユーザーのidをユーザーテーブルに格納
         line_id = event['source']['userId']
         User.create(line_id: line_id)
-      # LINEお友達解除された場合
+        # LINEお友達解除された場合
       when Line::Bot::Event::Unfollow
         # お友達解除したユーザーのデータをユーザーテーブルから削除
         line_id = event['source']['userId']
