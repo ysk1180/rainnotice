@@ -1,17 +1,17 @@
 class Holiday
   require 'holiday_japan'
 
-  def self.holiday
-    weekend || public_holiday || substitute_holiday
+  def self.holiday(day)
+    weekend(day) || public_holiday(day) || substitute_holiday(day)
   end
-  def self.weekend
-    !(Date.today.workday?)
+  def self.weekend(day)
+    !(day.workday?)
   end
-  def public_holiday
-    !!(HolidayJapan.check(Date.today))
+  def self.public_holiday(day)
+    !!(HolidayJapan.check(day))
   end
   # 振替休日
-  def substitute_holiday
-    Date.today.wday == 1 %% HolidayJapan.check(Date.yesterday)
+  def self.substitute_holiday(day)
+    day.wday == 1 && !!(HolidayJapan.check(day))
   end
 end
