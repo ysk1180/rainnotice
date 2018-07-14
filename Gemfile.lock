@@ -52,6 +52,9 @@ GEM
     bootsnap (1.3.0)
       msgpack (~> 1.0)
     builder (3.2.3)
+    business_time (0.9.3)
+      activesupport (>= 3.2.0)
+      tzinfo
     byebug (10.0.2)
     capybara (3.2.1)
       addressable
@@ -118,6 +121,7 @@ GEM
     ffi (1.9.25)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    holiday_japan (1.4.1)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     io-like (0.3.0)
@@ -250,6 +254,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap (>= 1.1.0)
+  business_time
   byebug
   capybara (>= 2.15, < 4.0)
   chromedriver-helper
@@ -257,6 +262,7 @@ DEPENDENCIES
   config
   dotenv-rails
   fablicop
+  holiday_japan
   jbuilder (~> 2.5)
   line-bot-api
   listen (>= 3.0.5, < 3.2)

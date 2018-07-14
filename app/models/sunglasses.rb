@@ -1,8 +1,11 @@
 class Sunglasses
   require 'line/bot'
   def self.sunglasses_main
+    # 本日が休日（土日・祝日）に当たるかの取得
+    holiday_or_not = Holiday.holiday
+    puts holiday_or_not
+    # 本日の天気の取得
     weather = Weather.weather
-    puts weather
   end
   def client
     client ||= Line::Bot::Client.new { |config|
