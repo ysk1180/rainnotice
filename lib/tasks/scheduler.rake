@@ -56,3 +56,6 @@ task :update_feed => :environment do
   end
   "OK"
 end
+task sunglasses: :environment do
+  Sunglasses.sunglasses_main
+end
