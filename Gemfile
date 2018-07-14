@@ -38,3 +38,5 @@ gem 'dotenv-rails'
 
 # ②LINE bot
 gem 'line-bot-api'
+
+gem 'config'
