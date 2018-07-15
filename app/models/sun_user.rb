@@ -1,0 +1,2 @@
+class SunUser < ApplicationRecord
+end

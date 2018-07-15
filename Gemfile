@@ -40,3 +40,5 @@ gem 'dotenv-rails'
 gem 'line-bot-api'
 
 gem 'config'
+gem 'holiday_japan'
+gem 'business_time'
