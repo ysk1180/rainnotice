@@ -10,7 +10,22 @@ class SunglassesController < ApplicationController
     unless client.validate_signature(body, signature)
       error 400 do 'Bad Request' end
     end
-    Sunglasses.friend
+    events = client.parse_events_from(body)
+    events.each { |event|
+      case event
+        # LINEお友達追された場合
+      when Line::Bot::Event::Follow
+        # 登録したユーザーのidをユーザーテーブルに格納
+        line_id = event['source']['userId']
+        SunUser.create(line_id: line_id)
+        # LINEお友達解除された場合
+      when Line::Bot::Event::Unfollow
+        # お友達解除したユーザーのデータをユーザーテーブルから削除
+        line_id = event['source']['userId']
+        SunUser.find_by(line_id: line_id).destroy
+      end
+    }
+    head :ok
   end
 
   def client
