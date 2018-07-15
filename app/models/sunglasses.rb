@@ -1,5 +1,6 @@
 class Sunglasses
   require 'line/bot'
+
   def self.sunglasses_main
     # 本日が休日（土日・祝日）に当たるかの取得
     holiday_or_not = Holiday.holiday(Time.zone.today)
@@ -11,6 +12,30 @@ class Sunglasses
       end
     end
   end
+
+  def self.friend
+    signature = request.env['HTTP_X_LINE_SIGNATURE']
+    unless client.validate_signature(body, signature)
+      error 400 do 'Bad Request' end
+    end
+    events = client.parse_events_from(body)
+    events.each { |event|
+      case event
+        # LINEお友達追された場合
+      when Line::Bot::Event::Follow
+        # 登録したユーザーのidをユーザーテーブルに格納
+        line_id = event['source']['userId']
+        SunUser.create(line_id: line_id)
+        # LINEお友達解除された場合
+      when Line::Bot::Event::Unfollow
+        # お友達解除したユーザーのデータをユーザーテーブルから削除
+        line_id = event['source']['userId']
+        SunUser.find_by(line_id: line_id).destroy
+      end
+    }
+    head :ok
+  end
+
   def client
     client ||= Line::Bot::Client.new { |config|
       config.channel_secret = ENV["LINE_CHANNEL_SECRET_SUN"]
