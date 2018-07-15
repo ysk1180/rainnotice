@@ -1,6 +1,6 @@
 class SunglassesController < ApplicationController
   require 'line/bot'
-  require 'sunglasses_controller.rb'
+  require 'sunglasses.rb'
 
   # callbackアクションのCSRFトークン認証を無効
   protect_from_forgery :except => [:callback]
