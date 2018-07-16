@@ -11,8 +11,8 @@ class Sunglasses
         word = Settings.word.warning
       end
       client ||= Line::Bot::Client.new { |config|
-        config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-        config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+        config.channel_secret = ENV["LINE_CHANNEL_SECRET_SUN"]
+        config.channel_token = ENV["LINE_CHANNEL_TOKEN_SUN"]
       }
       # メッセージの発信先idを配列で渡す必要があるため、userテーブルよりpluck関数を使ってidを配列で取得
       user_ids = SunUser.all.pluck(:line_id)
